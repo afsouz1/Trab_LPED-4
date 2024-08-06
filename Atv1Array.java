@@ -103,6 +103,8 @@ public class Atv1Array {
         return opt;
     }
 
+    
+
     public static void main(String[] args) {
         in = new Scanner(System.in);
         Atv1Array metodo = new Atv1Array();
