@@ -3,119 +3,105 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Iterator;
 
-//    Atv1 - Gerenciar Alunos e Notas de uma escola.
+//Atv1 - ArrayList: Alunos e Notas
 
 public class Atv1Array {
-    Scanner in;
-    ArrayList<String> nome;
-    ArrayList<Float> nota;
-
+    Scanner in = new Scanner(System.in);
+    ArrayList<String> nome = new ArrayList<>();
+    ArrayList<Float> nota = new ArrayList<>();
 
     public void metodoAdd(){
         System.out.print("\nInsira o Nome do aluno: ");
         nome.add(in.nextLine());
         System.out.print("Insira a Nota do aluno: ");
         nota.add(in.nextFloat());
+        in.nextLine();
     }
 
     public void metodoFind(){
-        Iterator<String> iteratorStr = nome.iterator();
-        Iterator<Float> iteratorFlt = nota.iterator();
-        int indice = 0;
-
-        do{
-            if(indice == 0)
-                System.out.print("\nDigite o nome do aluno que deseja editar:   ");
+        int indice = -1;
+        do {
+            if(indice == -1)
+                System.out.print("\nDigite o nome do aluno que deseja editar: ");
             else
-                System.out.print("\nNome:  ");
+                System.out.print("\nNome: ");
             String nome1 = in.nextLine();
             indice = nome.indexOf(nome1);
             if(indice == -1){
                 System.out.println("\nErro! Insira um nome válido");
-                metodo.opt1();
-            }else{
-                System.out.print("\nInsira o Nome do aluno: ");
+            } else {
+                System.out.print("\nInsira o novo Nome do aluno: ");
                 nome1 = in.nextLine();
                 nome.set(indice, nome1);
-                System.out.print("Insira a Nota do aluno: ");
+                System.out.print("Insira a nova Nota do aluno: ");
                 Float nota1 = in.nextFloat();
                 nota.set(indice, nota1);
+                in.nextLine();
             }
-        }while(indice ==-1);
-        
+        } while(indice == -1);
     }
 
-    public void metodoRemove(ArrayList<String> nome, ArrayList<Float> nota, Iterator<String> iteratorStr, Iterator<Float> iteratorFlt){
-        int indice = 0;
-        Iterator<String> iteratorStr = nome.iterator();
-        Iterator<Float> iteratorFlt = nota.iterator();
-
-        do{
-            if(indice == 0)
-                System.out.print("\nDigite o nome do aluno que deseja remover da lista:   ");
-            else
-                System.out.print("\nNome:  ");
+    public void metodoRemove(){
+        int indice = -1;
+        do {
+            System.out.print("\nDigite o nome do aluno que deseja remover da lista: ");
             String nome1 = in.nextLine();
             indice = nome.indexOf(nome1);
             if(indice == -1){
                 System.out.println("\nErro! Insira um nome válido");
-            }else{
+            } else {
                 nome.remove(indice);
                 nota.remove(indice);
-                System.out.println("\nNome e nota removido com sucesso!");               
+                System.out.println("\nNome e nota removidos com sucesso!");
             }
-        }while(indice ==-1);
-
+        } while(indice == -1);
     }
-    public void metodoMedia(){
+
+    public void metodoAvrg(){
+        float media = 0;
+        for(float nota2 : nota){
+            media += nota2;
+        }
+        System.out.println("Média = " + (media / nota.size()));
+    }
+
+    public void metodoShow(){
         Iterator<String> iteratorStr = nome.iterator();
         Iterator<Float> iteratorFlt = nota.iterator();
-        float media = 0;
-        iteratorFlt = nota.iterator();
         System.out.println("\n");
-        while(iteratorFlt.hasNext()){
+        while(iteratorStr.hasNext() && iteratorFlt.hasNext()){
+            String nome2 = iteratorStr.next();
             float nota2 = iteratorFlt.next();
-            System.out.println("Nota:  "+nota2);
-            media = media+nota2;
-
+            System.out.println("Aluno: " + nome2 + "  -> Nota: " + nota2);
         }
-        System.out.println("Média = "+(media/nota.size()));
-
     }
-
 
     public int opt1(){
         int opt = 0;
         int ext = 1;
         
-        do{
-        ext = 1;
-        System.out.print("\nSelecione a opção:\n   (1)Adicionar Aluno e Nota;\n   (2)Editar Aluno e Nota;\n   (3)Remover Aluno e Nota\n   (4)Verificar Média\n   (0)Sair;\n   Opção:   ");
-            try{
+        do {
+            ext = 1;
+            System.out.print("\nSelecione a opção:\n   (1)Adicionar Aluno e Nota;\n   (2)Editar Aluno e Nota;\n   (3)Remover Aluno e Nota;\n   (4)Verificar Média;\n   (5)Mostrar Alunos e Notas;\n   (0)Sair;\n   Opção: ");
+            try {
                 opt = in.nextInt();
-                in.nextLine();
-            }catch (Exception e){
+                in.nextLine();  // Consumir a nova linha restante
+            } catch (InputMismatchException e){
                 System.out.println("\nErro! refaça a operação");
-                in.nextLine();
+                in.nextLine();  // Limpar o buffer
                 ext = 0;
             }
-        }while(ext == 0);
+        } while(ext == 0);
         return opt;
     }
 
-    
-
     public static void main(String[] args) {
-        in = new Scanner(System.in);
         Atv1Array metodo = new Atv1Array();
-        nome = new ArrayList<>();
-        nota = new ArrayList<>();
 
-        int opt = 0;
-        opt = metodo.opt1(in);
-
-        while(opt != 0){
-            switch (opt){
+        int opt;
+        do {
+            opt = metodo.opt1();
+            switch (opt) {
                 case 1:
                     metodo.metodoAdd();
                     break;
@@ -126,16 +112,20 @@ public class Atv1Array {
                     metodo.metodoRemove();
                     break;
                 case 4:
-                    metodo.metodoMedia();
+                    metodo.metodoAvrg();
+                    break;
+                case 5:
+                    metodo.metodoShow();
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Informação incorreta, refaça a operação!");
                     break;
             }
-            opt = metodo.opt1(in);
-        }
+        } while(opt != 0);
 
-        in.close();
+        metodo.in.close();
     }
 }
-
