@@ -59,7 +59,9 @@ public class Atv1Array {
 
     public void metodoAvrg(){
         float media = 0;
-        for(float nota2 : nota){
+        System.out.println("\nNotas dos alunos:");
+        for (float nota2 : nota) {
+            System.out.println("Nota: " + nota2);
             media += nota2;
         }
         System.out.println("Média = " + (media / nota.size()));
@@ -85,10 +87,10 @@ public class Atv1Array {
             System.out.print("\nSelecione a opção:\n   (1)Adicionar Aluno e Nota;\n   (2)Editar Aluno e Nota;\n   (3)Remover Aluno e Nota;\n   (4)Verificar Média;\n   (5)Mostrar Alunos e Notas;\n   (0)Sair;\n   Opção: ");
             try {
                 opt = in.nextInt();
-                in.nextLine();  // Consumir a nova linha restante
+                in.nextLine();
             } catch (InputMismatchException e){
                 System.out.println("\nErro! refaça a operação");
-                in.nextLine();  // Limpar o buffer
+                in.nextLine();
                 ext = 0;
             }
         } while(ext == 0);
