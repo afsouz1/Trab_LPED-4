@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -15,6 +16,15 @@ public class Atv2Compromissos {
 
     public void methodAdd (){
         System.out.print("::Insira o nome do compromisso:  ");
+        do {
+            try {
+                
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            
+        } while (ext != 0);
+        
         compromisso.add(in.nextLine());
         System.out.print("::Insira a DESCRIÇÃO:  ");
         descricao.add(in.nextLine());
@@ -111,15 +121,26 @@ public class Atv2Compromissos {
     }
 
     public int methodOpt (){
-        System.out.print("\n::Insira a opção desejada:\n::1 - Adicionar Compromisso\n::2 - Remover Compromisso\n::3 - Listar compromissos\n::4 - Buscar compromisso por data\n::0 - Sair\n:: ");
-        int opt1 = in.nextInt();
-        in.nextLine();
+        int exc = 0;
+        int opt1 = 0;
+        do{
+            exc = 0;
+            System.out.print("\n::Insira a opção desejada:\n::1 - Adicionar Compromisso\n::2 - Remover Compromisso\n::3 - Listar compromissos\n::4 - Buscar compromisso por data\n::0 - Sair\n:: ");
+            try{
+                opt1 = in.nextInt();
+            }catch(InputMismatchException e){
+                in.nextLine();
+                System.out.println(">>Erro! Informação inserida incorreta;");
+                exc++;
+            }
+
+        }while(exc != 0);
         return opt1;
     }
 
     public static void main(String[] args) {
         Atv2Compromissos method = new Atv2Compromissos();
-        int ctrl = 1;
+        int ctrl = 0;
         int opt1 = 0;
 
         do{
@@ -139,7 +160,7 @@ public class Atv2Compromissos {
                     break;
                 default:
                     System.out.println(">>Erro! Refaça a operação!");
-                    ctrl = 0;
+                    ctrl = 1;
                     break;
             }
         }while(ctrl != 0);
