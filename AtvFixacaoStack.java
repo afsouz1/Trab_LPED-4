@@ -18,8 +18,8 @@ public class AtvFixacaoStack {
             System.out.println("\nSem tarefas a remover!");
             
         }else{
-            System.out.println("\nTarefa removida!");
             stack.pop();
+            System.out.println("\nTarefa removida!");
         }
     }
 
